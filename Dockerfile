@@ -1,6 +1,6 @@
 # Setup an environment for running this book's examples
 
-FROM ubuntu
+FROM ubuntu:16.04
 MAINTAINER Russell Jurney, russell.jurney@gmail.com
 
 WORKDIR /root
@@ -11,12 +11,14 @@ RUN apt-get update && \
     apt-get install -y zip unzip curl bzip2 python-dev build-essential git libssl1.0.0 libssl-dev
 
 # Setup Oracle Java8
-RUN apt-get install -y software-properties-common debconf-utils && \
-    add-apt-repository -y ppa:webupd8team/java && \
-    apt-get update && \
-    echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
-    apt-get install -y oracle-java8-installer
-ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
+# RUN apt-get install -y software-properties-common debconf-utils && \
+#     add-apt-repository -y ppa:webupd8team/java && \
+#     apt-get update && \
+#     echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
+#     apt-get install -y oracle-java8-installer
+# ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
+RUN apt-get install -y openjdk-8-jdk
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Download and install Anaconda Python
 ADD http://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh /tmp/Anaconda3-4.2.0-Linux-x86_64.sh
