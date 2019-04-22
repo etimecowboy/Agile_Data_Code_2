@@ -28,7 +28,7 @@ ENV PATH="/root/anaconda/bin:$PATH"
 #
 # Install git, clone repo, install Python dependencies
 #
-RUN git clone https://github.com/rjurney/Agile_Data_Code_2
+RUN git clone git@github.com:etimecowboy/Agile_Data_Code_2.git
 WORKDIR /root/Agile_Data_Code_2
 ENV PROJECT_HOME=/Agile_Data_Code_2
 RUN pip install --upgrade pip && \
