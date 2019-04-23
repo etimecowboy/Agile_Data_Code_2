@@ -36,27 +36,27 @@ ENV PROJECT_HOME=/Agile_Data_Code_2
 RUN git pull
 RUN pip install --upgrade pip
 RUN pip install -I colorama>=0.3.9
-RUN pip install sqlalchemy
-RUN pip install requests
-RUN pip install Flask
+# RUN pip install sqlalchemy
+# RUN pip install requests
+# RUN pip install Flask
+# RUN pip install numpy
+# RUN pip install scipy
+# RUN pip install ipython
+# RUN pip install matplotlib
+# RUN pip install scikit-learn
+# RUN pip install notebook==5.0.0
 RUN pip install pymongo
-RUN pip install numpy
-RUN pip install scipy
-RUN pip install ipython
-RUN pip install matplotlib
 RUN pip install kafka-python
 RUN pip install bs4
 RUN pip install py4j
 RUN pip install frozendict
 RUN pip install geopy
 RUN pip install selenium
-RUN pip install scikit-learn
 RUN pip install tabulate
 RUN pip install tldextract
 RUN pip install wikipedia
 RUN pip install findspark
 RUN pip install iso8601
-RUN pip install notebook==5.0.0
 RUN pip install beautifulsoup4
 RUN pip install pyelasticsearch
 RUN pip install apache-airflow
