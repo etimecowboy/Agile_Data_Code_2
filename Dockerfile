@@ -32,8 +32,11 @@ ENV PATH="/root/anaconda/bin:$PATH"
 RUN git clone https://github.com/etimecowboy/Agile_Data_Code_2.git
 WORKDIR /root/Agile_Data_Code_2
 ENV PROJECT_HOME=/Agile_Data_Code_2
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# RUN pip install --upgrade pip
+# RUN pip install -I colorama>=0.3.9
+# RUN pip install sqlalchemy
+# RUN pip install -r requirements.txt
+RUN conda install --yes --file requirements.txt
 WORKDIR /root
 
 #
