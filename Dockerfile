@@ -59,7 +59,8 @@ RUN pip install findspark
 RUN pip install iso8601
 RUN pip install beautifulsoup4
 RUN pip install pyelasticsearch
-RUN pip install apache-airflow
+RUN pip install apache-airflow --ignore-installed
+RUN pip install -I notebook==5.0.0
 # RUN pip install -r requirements.txt
 # RUN conda install --yes --file requirements.txt
 WORKDIR /root
@@ -67,7 +68,7 @@ WORKDIR /root
 #
 # Install Hadoop: may need to update this link... see http://hadoop.apache.org/releases.html
 #
-ADD ./thirdparty/hadoop-2.7.3.tar.gz /tmp/hadoop-2.7.3.tar.gz
+COPY ./thirdparty/hadoop-2.7.3.tar.gz /tmp/hadoop-2.7.3.tar.gz
 RUN mkdir -p /root/hadoop && \
     tar -xvf /tmp/hadoop-2.7.3.tar.gz -C hadoop --strip-components=1
 ENV HADOOP_HOME=/root/hadoop
@@ -78,7 +79,7 @@ ENV HADOOP_CONF_DIR=/root/hadoop/etc/hadoop
 #
 # Install Spark: may need to update this link... see http://spark.apache.org/downloads.html
 #
-ADD ./thirdparty/spark-2.1.0-bin-without-hadoop.tgz /tmp/spark-2.1.0-bin-without-hadoop.tgz
+COPY ./thirdparty/spark-2.1.0-bin-without-hadoop.tgz /tmp/spark-2.1.0-bin-without-hadoop.tgz
 RUN mkdir -p /root/spark && \
     tar -xvf /tmp/spark-2.1.0-bin-without-hadoop.tgz -C spark --strip-components=1
 ENV SPARK_HOME=/root/spark
@@ -114,7 +115,7 @@ ADD ./thirdparty/mongo-java-driver-3.4.0.jar /tmp/mongo-java-driver-3.4.0.jar
 RUN mv /tmp/mongo-java-driver-3.4.0.jar /root/Agile_Data_Code_2/lib/
 
 # Install the mongo-hadoop project in the mongo-hadoop directory in the root of our project.
-ADD ./thirdparty/mongo-hadoop-r.1.5.2.tar.gz /tmp/mongo-hadoop-r1.5.2.tar.gz
+COPY ./thirdparty/mongo-hadoop-r1.5.2.tar.gz /tmp/mongo-hadoop-r1.5.2.tar.gz
 RUN mkdir -p /root/mongo-hadoop && \
     tar -xvzf /tmp/mongo-hadoop-r1.5.2.tar.gz -C mongo-hadoop --strip-components=1 && \
     rm -f /tmp/mongo-hadoop-r1.5.2.tar.gz
@@ -137,14 +138,14 @@ RUN rm -rf /root/mongo-hadoop
 #
 # Install ElasticSearch in the elasticsearch directory in the root of our project, and the Elasticsearch for Hadoop package
 #
-ADD ./thirdparty/elasticsearch-5.1.1.tar.gz /tmp/elasticsearch-5.1.1.tar.gz
+COPY ./thirdparty/elasticsearch-5.1.1.tar.gz /tmp/elasticsearch-5.1.1.tar.gz
 RUN mkdir /root/elasticsearch && \
     tar -xvzf /tmp/elasticsearch-5.1.1.tar.gz -C elasticsearch --strip-components=1 && \
     /root/elasticsearch/bin/elasticsearch -d && \
     rm -f /tmp/elasticsearch-5.1.1.tar.gz
 
 # Install Elasticsearch for Hadoop
-ADD ./thirdparty/elasticsearch-hadoop-5.1.1.zip /tmp/elasticsearch-hadoop-5.1.1.zip
+COPY ./thirdparty/elasticsearch-hadoop-5.1.1.zip /tmp/elasticsearch-hadoop-5.1.1.zip
 RUN unzip /tmp/elasticsearch-hadoop-5.1.1.zip && \
     mv /root/elasticsearch-hadoop-5.1.1 /root/elasticsearch-hadoop && \
     cp /root/elasticsearch-hadoop/dist/elasticsearch-hadoop-5.1.1.jar /root/Agile_Data_Code_2/lib/ && \
@@ -165,7 +166,7 @@ RUN echo "spark.jars /root/Agile_Data_Code_2/lib/mongo-hadoop-spark-1.5.2.jar,/r
 #
 # Install and setup Kafka
 #
-ADD ./thirdparty/kafka_2.11-0.10.1.1.tgz /tmp/kafka_2.11-0.10.1.1.tgz
+COPY ./thirdparty/kafka_2.11-0.10.1.1.tgz /tmp/kafka_2.11-0.10.1.1.tgz
 RUN mkdir -p /root/kafka && \
     tar -xvzf /tmp/kafka_2.11-0.10.1.1.tgz -C kafka --strip-components=1 && \
     rm -f /tmp/kafka_2.11-0.10.1.1.tgz
@@ -191,7 +192,7 @@ RUN pip install apache-airflow && \
 # Install and setup Zeppelin
 #
 WORKDIR /root
-ADD ./thirdparty/zeppelin-0.6.2-bin-all.tgz /tmp/zeppelin-0.6.2-bin-all.tgz
+COPY ./thirdparty/zeppelin-0.6.2-bin-all.tgz /tmp/zeppelin-0.6.2-bin-all.tgz
 RUN mkdir -p /root/zeppelin && \
     tar -xvzf /tmp/zeppelin-0.6.2-bin-all.tgz -C zeppelin --strip-components=1 && \
     rm -f /tmp/zeppelin-0.6.2-bin-all.tgz
@@ -292,3 +293,5 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Done!
+
+ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
