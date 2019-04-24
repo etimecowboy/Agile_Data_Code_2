@@ -287,6 +287,8 @@ WORKDIR /root/Agile_Data_Code_2/data
 
 # Back to /root
 WORKDIR /root
+RUN pip install --upgrade notebook
+# RUN pip install -I tornado==5.1.1
 
 # Cleanup
 RUN apt-get clean && \
@@ -294,4 +296,6 @@ RUN apt-get clean && \
 
 # Done!
 
-ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
+WORKDIR /root/Agile_Data_Code_2
+RUN git pull 
+# ENTRYPOINT ["jupyter", "notebook", "--allow-root"]

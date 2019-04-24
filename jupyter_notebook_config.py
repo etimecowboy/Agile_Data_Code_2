@@ -3,7 +3,7 @@ c = get_config()
 # Notebook config this is where you saved your pem cert
 # c.NotebookApp.certfile = u'/home/ubuntu/certs/mycert.pem'
 # Run on all IP addresses of your instance
-c.NotebookApp.ip = '*'
+c.NotebookApp.ip = '0.0.0.0'
 # Don't open browser by default
 c.NotebookApp.open_browser = False  
 # Fix port to 8888

@@ -27,4 +27,4 @@ models
 .deep_reservation_id
 deep/data
 .vscode
-thirdparty/
+thirdparty*/
