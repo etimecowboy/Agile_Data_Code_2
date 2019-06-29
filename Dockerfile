@@ -289,7 +289,7 @@ WORKDIR /root/Agile_Data_Code_2/data
 WORKDIR /root
 RUN pip install --upgrade notebook
 # RUN pip install -I tornado==5.1.1
-RUN pip install pyarrow
+RUN pip install --default-timeout=100 pyarrow
 
 # Cleanup
 RUN apt-get clean && \
@@ -299,4 +299,4 @@ RUN apt-get clean && \
 
 WORKDIR /root/Agile_Data_Code_2
 RUN git pull 
-# ENTRYPOINT ["jupyter", "notebook", "--allow-root"]
+ENTRYPOINT ["jupyter", "notebook", "--allow-root"]
